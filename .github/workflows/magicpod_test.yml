@@ -16,7 +16,7 @@ jobs:
           echo '{"timestamp": "'$(date +%Y-%m-%dT%H:%M:%S)'", "output": "'$(cat test_results.txt | tr -d '\n')'"}' > test_results.json
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: magicpod-test-results
           path: test_results.json
