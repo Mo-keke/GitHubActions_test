@@ -1,12 +1,22 @@
 name: MagicPod Test Workflow
 on: [push]
+
 jobs:
   magic_pod_job:
     runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      
       - name: Batch run test
         env:
           MAGICPOD_API_TOKEN: ${{ secrets.MAGICPOD_API_TOKEN }}
-        run: bash run_magicpod_test.sh
+        run: |
+          bash run_magicpod_test.sh > test_results.txt
+          echo '{"timestamp": "'$(date +%Y-%m-%dT%H:%M:%S)'", "output": "'$(cat test_results.txt | tr -d '\n')'"}' > test_results.json
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: magicpod-test-results
+          path: test_results.json
