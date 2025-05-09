@@ -1,5 +1,6 @@
 name: MagicPod Test Workflow
 on: [push]
+    [workflow_dispatch]
 
 jobs:
   magic_pod_job:
